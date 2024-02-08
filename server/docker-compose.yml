@@ -2,14 +2,16 @@ version: '3.8'
 
 services:
   mysql-db:
-    build:
-      context: .
-      dockerfile: ./db/Dockerfile
+    image: mysql
+    restart: always
     container_name: mysql-container
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: test123
       MYSQL_DATABASE: reservation
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+      MYSQL_ROOT_PASSWORD: root 
     volumes:
+      - ./db:/docker-entrypoint-initdb.d
       - ./data:/var/lib/mysql

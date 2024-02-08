@@ -8,7 +8,7 @@ CREATE TABLE benutzer (
 	PRIMARY KEY(benutzerID)
 );
 
-CREATE TABLE Reservierung(
+CREATE TABLE reservierung(
 	rID INT NOT NULL AUTO_INCREMENT,
 	bucher INT,
 	datum DATE,
