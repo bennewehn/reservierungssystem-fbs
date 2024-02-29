@@ -1,19 +1,27 @@
-CREATE TABLE benutzer (
-	benutzerID INT NOT NULL AUTO_INCREMENT,
-	vorname VARCHAR(50),
-	nachname VARCHAR(50),
-	benutzername VARCHAR(50),
-	email VARCHAR(100),
-	passwort VARCHAR(50),
-	PRIMARY KEY(benutzerID)
+CREATE TABLE user(
+	userId INT NOT NULL AUTO_INCREMENT,
+	email VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	password VARCHAR(60) NOT NULL,
+	PRIMARY KEY(userId),
+	UNIQUE (email)
 );
 
-CREATE TABLE reservierung(
-	rID INT NOT NULL AUTO_INCREMENT,
-	bucher INT,
-	datum DATE,
-	zeitraum TIME,
-	anzahlPCs INT,
-	PRIMARY KEY(rID),
-	FOREIGN KEY(bucher) REFERENCES benutzer(benutzerID)
+CREATE TABLE reservation(
+	rId INT NOT NULL AUTO_INCREMENT,
+	user INT NOT NULL,
+	startTime DATETIME NOT NULL,
+	endTime DATETIME NOT NULL,
+	count INT NOT NULL,
+	PRIMARY KEY(rId),
+	FOREIGN KEY(user) REFERENCES user(userId)
+);
+
+CREATE TABLE refreshToken(
+	refreshTokenId INT NOT NULL AUTO_INCREMENT,
+	userId INT NOT NULL,
+	token VARCHAR(50) NOT NULL,
+	expiryDate TIMESTAMP NOT NULL,
+	PRIMARY KEY(refreshTokenId),
+	FOREIGN KEY(userID) REFERENCES user(userId)
 );
