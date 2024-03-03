@@ -23,6 +23,11 @@ ReservationRouter.get(
   ReservationsController.getDay
 );
 
+ReservationRouter.get(
+  "/max",
+  ReservationsController.getMaxReservations
+);
+
 ReservationRouter.post(
   "/",
   createReservationRules(),

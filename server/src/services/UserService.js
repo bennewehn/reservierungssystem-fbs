@@ -3,20 +3,22 @@ import {
   createRefreshTokenDB,
   getRefreshTokenDB,
   deleteRefreshTokenByIdDB,
-  getRefreshTokenByUserIdDB
+  getRefreshTokenByUserIdDB,
+  deleteRefreshToken
 } from "../db/RefreshTokenDB.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {v4} from "uuid";
+import { UserNotFoundError, PasswordInvalidError, UserAlreadyExistsError } from "../errors.js";
 
 export default class UserService {
   static async createUser(data) {
     const user = await getUserByEmailDB(data.email);
     if (user) {
-      throw new Error("Email already used.");
+      throw new UserAlreadyExistsError("Email already used.");
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    await createUserDB(data.name, data.email, hashedPassword);
+    await createUserDB(data.firstName, data.lastName, data.email, hashedPassword);
   }
 
   static async login(data) {
@@ -24,7 +26,7 @@ export default class UserService {
     const user = await getUserByEmailDB(data.email);
 
     if (!user) {
-      throw new Error("User not found.");
+      throw new UserNotFoundError("User not found.");
     }
 
     // check if refresh token exists for user
@@ -37,13 +39,18 @@ export default class UserService {
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
 
     if (!isPasswordValid) {
-      throw new Error("Invalid password.");
+      throw new PasswordInvalidError("Invalid password.");
     }
 
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.createRefreshToken(user);
 
     return { accessToken, refreshToken };
+  }
+
+  static async logout(refreshToken){
+    // delete refreshToken
+     await deleteRefreshToken(refreshToken);
   }
 
   static async createRefreshToken(user) {
@@ -71,12 +78,12 @@ export default class UserService {
     let refreshTokenDB = await getRefreshTokenDB(refreshToken);
 
     if (!refreshTokenDB) {
-      throw Error("Refresh token not valid.");
+      throw new RefreshTokenNotValidError("Refresh token not valid.");
     }
 
     if (this.verifyRefreshTokenExpiration(refreshTokenDB)) {
       await deleteRefreshTokenByIdDB(refreshTokenDB.refreshTokenId);
-      throw Error(
+      throw new RefreshTokenExpiredError(
         "Refresh token was expired. Please make a new signin request."
       );
     }

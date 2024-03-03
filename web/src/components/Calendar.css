@@ -1,0 +1,80 @@
+.centered-table td,
+.centered-table th {
+  text-align: center;
+}
+
+.prevent-highlight {
+  user-select: none; /* Prevent text selection */
+}
+
+.mycalendar {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 12px;
+}
+
+.mycalendar td {
+  padding: 3px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.mycalendar .header th{
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+}
+
+.mycalendar .free-cell {
+  background-color: #3eb48938;
+}
+
+.mycalendar .free-cell:hover {
+  background-color: #3eb4896e;
+}
+
+.mycalendar .middle-cell {
+  background-color: #ffc40238;
+}
+
+.mycalendar .middle-cell:hover {
+  background-color: #ffc4026e;
+}
+
+.mycalendar .full-cell {
+  background-color: #ff020238;
+}
+
+.mycalendar .full-cell:hover {
+  background-color: #ff02026e;
+}
+
+.mycalendar .hour-cell {
+  background-color: white;
+  border: 0px;
+  border: 1px solid #e4e4e4;
+  cursor: default;
+}
+
+.mycalendar .th-date {
+  font-size: 0.8rem;
+  font-weight: lighter;
+  color: rgb(200, 200, 200);
+}
+
+.hour-text {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.lesson-count {
+  font-weight: bold;
+}
+
+
+.custom-divider {
+  height: 1px; /* Adjust the thickness as needed */
+  background-color: #000; /* Optional: Change the color if needed */
+}

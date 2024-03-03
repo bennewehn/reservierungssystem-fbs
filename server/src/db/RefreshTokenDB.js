@@ -15,6 +15,11 @@ export async function deleteRefreshTokenByIdDB(tokenId){
     return result;
 }
 
+export async function deleteRefreshToken(token){
+    const result = await pool.query(`DELETE FROM refreshToken WHERE token=?`, [token]);
+    return result;
+}
+
 export async function getRefreshTokenByUserIdDB(userId){
     const [result] = await pool.query(`SELECT * FROM refreshToken WHERE userId=?`, [userId]);
     return result[0];

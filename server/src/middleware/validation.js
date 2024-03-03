@@ -2,24 +2,25 @@ import { body, query, validationResult } from "express-validator";
 
 export const loginValidationRules = () => {
   return [
-    body("data.email").isEmail().withMessage("Invalid email"),
+    body("data.email").isEmail().withMessage("Invalid email."),
     body("data.password")
       .notEmpty()
-      .withMessage("Password is required")
+      .withMessage("Password is required.")
       .isString()
-      .withMessage("Password must be a string"),
+      .withMessage("Password must be a string."),
   ];
 };
 
 export const createUserValidationRules = () => {
   return [
-    body("data.name").isLength({ min: 1 }).withMessage("Name is required"),
-    body("data.email").isEmail().withMessage("Invalid email"),
+    body("data.firstName").isLength({ min: 1 }).withMessage("First Name is required."),
+    body("data.lastName").isLength({ min: 1 }).withMessage("Last Name is required."),
+    body("data.email").isEmail().withMessage("Invalid Email."),
     body("data.password")
       .isString()
-      .withMessage("Password must be a string")
+      .withMessage("Password must be a string.")
       .isLength({ min: 6 })
-      .withMessage("Password must be at least 6 characters long"),
+      .withMessage("Password must be at least 6 characters long."),
   ];
 };
 
@@ -29,18 +30,18 @@ function validateStartAndEndTime(validChainStartTime, validChainEndTime) {
       .exists()
       .isISO8601()
       .toDate()
-      .withMessage("startTime must be a valid date"),
+      .withMessage("startTime must be a valid date."),
     validChainEndTime
       .exists()
       .isISO8601()
       .toDate()
-      .withMessage("endTime must be a valid date")
+      .withMessage("endTime must be a valid date.")
       .custom((value, { req }) => {
         // Custom validation to ensure endTime is after startTime
         const startTime = new Date(req.query.startTime);
         const endTime = new Date(value);
         if (endTime <= startTime) {
-          throw new Error("endTime must be after startTime");
+          throw new Error("endTime must be after startTime.");
         }
         return true;
       }),

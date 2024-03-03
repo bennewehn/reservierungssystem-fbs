@@ -1,0 +1,11 @@
+.custom-datepicker .MuiInputBase-root {
+  width: 200px; /* Adjust the width of the input */
+  height: 40px;
+}
+
+.icon{
+  margin: -20px;
+  width: 20px;
+  height: 30px;
+  margin: -4px;
+}

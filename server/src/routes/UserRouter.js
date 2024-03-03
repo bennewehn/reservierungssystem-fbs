@@ -22,6 +22,11 @@ UserRouter.post(
   UserController.login
 );
 
+UserRouter.post(
+  "/logout",
+  UserController.logout
+);
+
 UserRouter.post("/refresh", UserController.refresh);
 
 export default UserRouter;

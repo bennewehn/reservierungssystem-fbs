@@ -38,6 +38,15 @@ export default class ReservationsController {
     }
   }
 
+  static async getMaxReservations(req, res) {
+    try {
+      const maxRes = await ReservationService.getMaxReservations();
+      res.status(200).json({ maxReservations: maxRes });
+    } catch (e) {
+      res.sendStatus(500);
+    }
+  }
+
   static async deleteReservationById(req, res) {}
 
   static async putReservation(req, res) {}

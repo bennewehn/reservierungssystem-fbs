@@ -14,9 +14,8 @@ export default class ReservationService {
       data.endTime
     );
     // check if enough reservations are available
-    const maxReservations = await ConfigurationService.getValueByKey(
-      "maxReservations"
-    );
+    const maxReservations = this.getMaxReservations(); 
+
     if (reservationsCount + data.count >= maxReservations) {
       throw new Error("Not enough reservations available.");
     }
@@ -27,6 +26,10 @@ export default class ReservationService {
       data.endTime,
       data.count
     );
+  }
+
+  static async getMaxReservations() {
+    return await ConfigurationService.getValueByKey("maxReservations");
   }
 
   static async getReservationsTimePeriod(startTime, endTime) {

@@ -1,7 +1,7 @@
 import pool from './index.js';
 
-export async function createUserDB(name, email, password){
-    await pool.query(`INSERT INTO user (email, name, password) VALUES (?, ?, ?)`, [email, name, password]);
+export async function createUserDB(firstName, lastName, email, password){
+    await pool.query(`INSERT INTO user (firstName, lastName, email, password) VALUES (?, ?, ?, ?)`, [firstName, lastName, email, password]);
 }
 
 export async function getUserByEmailDB(email){
