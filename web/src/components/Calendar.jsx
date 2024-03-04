@@ -54,7 +54,7 @@ export default function Calendar({ cellMatrix, onDateChange }) {
               {hours
                 ?.map((hour) => hour.split("-"))
                 ?.map((hour, idx) => (
-                  <tr>
+                  <tr key={hour}>
                     <td className="hour-cell">
                       <div className="hour-text">{hour[0]}</div>
                       <div className="lesson-count">{idx}</div>

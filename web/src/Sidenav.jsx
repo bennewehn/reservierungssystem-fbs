@@ -204,7 +204,11 @@ export default function Sidenav({ handleLogout }) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {pages.map((p) => (p.name === menudata ? p.content : <></>))}
+        {pages.map((p) => (
+          <div key={p.name}>
+            {(p.name === menudata ? p.content : <></>)}
+          </div>
+        ))}
       </Box>
     </Box>
   );
