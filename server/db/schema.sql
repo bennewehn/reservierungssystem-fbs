@@ -14,6 +14,7 @@ CREATE TABLE reservation(
 	startTime DATETIME NOT NULL,
 	endTime DATETIME NOT NULL,
 	count INT NOT NULL,
+	createdOn DATETIME NOT NULL,
 	PRIMARY KEY(rId),
 	FOREIGN KEY(userId) REFERENCES user(userId)
 );

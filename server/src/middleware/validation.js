@@ -2,25 +2,25 @@ import { body, query, validationResult } from "express-validator";
 
 export const loginValidationRules = () => {
   return [
-    body("data.email").isEmail().withMessage("Invalid email."),
+    body("data.email").isEmail().withMessage("Ungültige Email."),
     body("data.password")
       .notEmpty()
-      .withMessage("Password is required.")
+      .withMessage("Passwort wird benötigt.")
       .isString()
-      .withMessage("Password must be a string."),
+      .withMessage("Passwort muss eine Zeichenkette sein."),
   ];
 };
 
 export const createUserValidationRules = () => {
   return [
-    body("data.firstName").isLength({ min: 1 }).withMessage("First Name is required."),
-    body("data.lastName").isLength({ min: 1 }).withMessage("Last Name is required."),
-    body("data.email").isEmail().withMessage("Invalid Email."),
+    body("data.firstName").isLength({ min: 1 }).withMessage("Vorname wird benötigt."),
+    body("data.lastName").isLength({ min: 1 }).withMessage("Nachname wird benötigt."),
+    body("data.email").isEmail().withMessage("Ungültige Email."),
     body("data.password")
       .isString()
-      .withMessage("Password must be a string.")
+      .withMessage("Passwort muss eine Zeichenkette sein.")
       .isLength({ min: 6 })
-      .withMessage("Password must be at least 6 characters long."),
+      .withMessage("Passwort muss mindestens 6 Zeichen lang sein."),
   ];
 };
 

@@ -39,7 +39,7 @@ export default class UserService {
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
 
     if (!isPasswordValid) {
-      throw new PasswordInvalidError("Invalid password.");
+      throw new PasswordInvalidError("Ungültiges Passwort.");
     }
 
     const accessToken = await this.generateAccessToken(user);
