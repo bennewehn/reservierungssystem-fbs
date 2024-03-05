@@ -53,7 +53,30 @@ export default class ReservationsController {
     }
   }
 
-  static async deleteReservationById(req, res) {}
+  static async getUserReservations(req, res) {
+    try {
+      const reservations = await ReservationService.getUserReservations(
+        req.user
+      );
+      res.status(200).json(reservations);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
 
-  static async putReservation(req, res) {}
+  static async deleteReservationById(req, res) {
+    try {
+      const found = await ReservationService.deleteUserReservationById(req.user, req.params.id);
+      if(!found){
+        res.status(404).json({error: "Reservation not found."});
+      }
+      else{
+        res.sendStatus(200);
+      }
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
 }

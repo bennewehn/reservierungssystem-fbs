@@ -5,6 +5,7 @@ import {
   reservationTimePeriodRules,
   createReservationRules,
   reservationsForDayRules,
+  reservationIdSchema,
 } from "../middleware/validation.js";
 
 const ReservationRouter = express.Router();
@@ -35,8 +36,17 @@ ReservationRouter.post(
   ReservationsController.postReservation
 );
 
-ReservationRouter.delete("/:id", ReservationsController.deleteReservationById);
+ReservationRouter.get(
+  "/",
+  ReservationsController.getUserReservations
+);
 
-ReservationRouter.put("/:id", ReservationsController.putReservation);
+ReservationRouter.delete(
+  "/:id",
+  reservationIdSchema,
+  validate,
+  ReservationsController.deleteReservationById
+);
+
 
 export default ReservationRouter;

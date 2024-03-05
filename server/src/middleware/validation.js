@@ -1,4 +1,4 @@
-import { body, query, validationResult } from "express-validator";
+import { body, checkSchema, query, validationResult } from "express-validator";
 
 export const loginValidationRules = () => {
   return [
@@ -97,6 +97,20 @@ export const reservationsForDayRules = () => {
     .withMessage("day must be a valid date"),
   ];
 };
+
+export const reservationIdSchema = checkSchema({
+  id: {
+    in: ['params'],
+    isInt: {
+      errorMessage: 'ID must be an integer',
+      bail: true // Stop validation if this fails
+    },
+    notEmpty: {
+      errorMessage: 'ID cannot be empty',
+      bail: true // Stop validation if this fails
+    }
+  }
+});
 
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
