@@ -40,7 +40,7 @@ export default function Calendar({ cellMatrix, maxReservations, onDateChange, on
           <table className="centered-table mycalendar prevent-highlight">
             <thead>
               <tr className="header">
-                <th colSpan={1}>Time</th>
+                <th colSpan={1}>Zeit</th>
                 {days.map((day, idx) => {
                   const date = new Date(currentDay);
                   date.setDate(date.getDate() + idx);

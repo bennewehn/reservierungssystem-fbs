@@ -1,15 +1,8 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../provider/AuthProvider";
+import { Outlet, Navigate } from "react-router-dom";
 
-export const ProtectedRoute = () => {
-  const { token } = useAuth();
-
-  // Check if the user is authenticated
-  if (!token) {
-    // If not authenticated, redirect to the login page
-    return <Navigate to="/login" />;
-  }
-
-  // If authenticated, render the child routes
-  return <Outlet />;
+const PrivateRoutes = () => {
+  const token = localStorage.getItem("token");
+  return token ? <Outlet /> : <Navigate to="/login" />;
 };
+
+export default PrivateRoutes;

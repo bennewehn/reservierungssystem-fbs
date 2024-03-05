@@ -11,12 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../provider/AuthProvider";
 
 export default function LoginPage() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const { setToken } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -38,7 +36,7 @@ export default function LoginPage() {
         setErrors([]);
         setLoginLoading(false);
         const token = response.headers["authorization"];
-        setToken(token);
+        localStorage.setItem("token", token);
         navigate("/", { replace: true });
       })
       .catch((error) => {
@@ -48,8 +46,7 @@ export default function LoginPage() {
           error.response.data.errors
         ) {
           setErrors(error.response.data.errors);
-        }
-        else{
+        } else {
           setErrors([]);
         }
         console.error("Error:", error);

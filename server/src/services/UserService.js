@@ -9,7 +9,7 @@ import {
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {v4} from "uuid";
-import { UserNotFoundError, PasswordInvalidError, UserAlreadyExistsError } from "../errors.js";
+import { UserNotFoundError, PasswordInvalidError, UserAlreadyExistsError, RefreshTokenNotValidError, RefreshTokenExpiredError } from "../errors.js";
 
 export default class UserService {
   static async createUser(data) {

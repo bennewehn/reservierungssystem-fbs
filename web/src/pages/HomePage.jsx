@@ -1,16 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import Sidenav from "../Sidenav";
-import { useAuth } from "../provider/AuthProvider";
 import axios from "axios";
 
 export default function HomePage() {
-  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     axios
       .post("/users/logout")
       .then((response) => {
-        console.log(response)
-        setToken("");
+        localStorage.removeItem("token");
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);

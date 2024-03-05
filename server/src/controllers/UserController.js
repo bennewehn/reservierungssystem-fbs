@@ -3,6 +3,8 @@ import {
   UserNotFoundError,
   PasswordInvalidError,
   UserAlreadyExistsError,
+  RefreshTokenNotValidError,
+  RefreshTokenExpiredError,
 } from "../errors.js";
 
 export default class UserController {
@@ -82,6 +84,9 @@ export default class UserController {
         );
         res.header("Authorization", accessToken).sendStatus(200);
       } catch (error) {
+        if(error instanceof RefreshTokenNotValidError || error instanceof RefreshTokenExpiredError){
+          return res.status(403).send({ message: error.message });
+        }
         return res.status(500).send({ message: error });
       }
     }

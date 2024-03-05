@@ -19,7 +19,7 @@ export default function DateField({ onChange }) {
     } else {
       initialRender.current = false;
     }
-  }, [selectedDate]);
+  }, [selectedDate, onChange]);
 
   const handleLastWeek = () => {
     setSelectedDate((prev) => prev.subtract(7, "day"));
