@@ -4,16 +4,16 @@ import Paper from "@mui/material/Paper";
 import DateField from "./DateField";
 import dayjs from "dayjs";
 
-export default function Calendar({ cellMatrix, onDateChange }) {
+export default function Calendar({ cellMatrix, maxReservations, onDateChange, onCellClick }) {
   const [currentDay, setCurrentDay] = useState(dayjs(Date()));
 
   const days = ["Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."];
 
   const hours = [
     "08:00-09:30",
-    "09:45-11:35",
+    "09:45-11:15",
     "11:30-13:00",
-    "13:00-15:00",
+    "13:30-15:00",
     "15:15-16:45",
     "16:45-18:15",
     "18:15-20:00",
@@ -21,8 +21,15 @@ export default function Calendar({ cellMatrix, onDateChange }) {
   ];
 
   const setCurrentWeek = (day) => {
-    setCurrentDay(day.startOf("week").add(1, 'day'));
+    setCurrentDay(day.startOf("week").add(1, "day"));
     if (onDateChange) onDateChange(day);
+  };
+
+  const getCellColor = (count) => {
+    if (count === 0) return "full-cell";
+    else if (count <= 0.4 * maxReservations) return "middle2-cell";
+    else if (count <= 0.7 * maxReservations) return "middle-cell";
+    return "free-cell";
   };
 
   return (
@@ -62,7 +69,9 @@ export default function Calendar({ cellMatrix, onDateChange }) {
                     </td>
 
                     {cellMatrix[idx]?.map((data, idx) => (
-                      <td key={idx}>{data}</td>
+                      <td key={idx} className={getCellColor(data)} onClick={() => onCellClick(data, {hour, idx})}>
+                        {data}
+                      </td>
                     ))}
                   </tr>
                 ))}

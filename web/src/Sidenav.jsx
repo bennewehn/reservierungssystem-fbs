@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -18,8 +18,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ListIcon from "@mui/icons-material/List";
 import ReservePage from "./pages/ReservePage";
 import logo from "./assets/images/logoFbs.png";
+import MyReservationsPage from "./pages/MyReservationsPage";
 
 const drawerWidth = 240;
 
@@ -89,14 +91,13 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const pages = [
-  { name: "Reserve", icon: <EditCalendarIcon />, content: <ReservePage /> },
-  { name: "Profile", icon: <AccountCircleIcon />, content: <>Profile</> },
+  { name: "Reservieren", icon: <EditCalendarIcon />, content: <ReservePage /> },
+  { name: "Meine Reservierungen", icon: <ListIcon/>, content: <MyReservationsPage/> },
 ];
 
 export default function Sidenav({ handleLogout }) {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [menudata, setMenuData] = useState("Reserve");
+  const [menudata, setMenuData] = useState("Reservieren");
 
   const handleDrawerOpen = () => {
     setOpen(true);

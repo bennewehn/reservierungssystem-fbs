@@ -1,3 +1,4 @@
+import { NotEnoughReservationsAvailableError } from "../errors.js";
 import ReservationService from "../services/ReservationService.js";
 
 export default class ReservationsController {
@@ -33,8 +34,13 @@ export default class ReservationsController {
         req.user
       );
       res.status(201).send({ id: id });
-    } catch (e) {
-      res.status(409).send({ message: e.message });
+    } catch (error) {
+      if (error instanceof NotEnoughReservationsAvailableError) {
+        res.status(409).json({ error: error.message });
+      } else {
+        res.sendStatus(500);
+        console.log(error);
+      }
     }
   }
 

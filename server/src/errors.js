@@ -28,3 +28,9 @@ export class UserAlreadyExistsError extends Error {
         super(msg); 
     } 
 } 
+
+export class NotEnoughReservationsAvailableError extends Error { 
+    constructor(msg) { 
+        super(msg); 
+    } 
+} 

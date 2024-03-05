@@ -4,20 +4,36 @@ import {
   getReservationsCountForPeriodDB,
   getReservationsForDayDB,
 } from "../db/ReservationsDB.js";
+import { NotEnoughReservationsAvailableError } from "../errors.js";
 import ConfigurationService from "./ConfigurationService.js";
 
 export default class ReservationService {
   static async createReservation(data, user) {
-    // get all reservations in time period
-    const { reservationsCount } = await getReservationsCountForPeriodDB(
-      data.startTime,
-      data.endTime
-    );
     // check if enough reservations are available
-    const maxReservations = this.getMaxReservations(); 
+    const maxReservations = await this.getMaxReservations();
 
-    if (reservationsCount + data.count >= maxReservations) {
-      throw new Error("Not enough reservations available.");
+    if (data.count > maxReservations) {
+      throw new NotEnoughReservationsAvailableError(
+        "Not enough reservations available."
+      );
+    }
+
+    // add one second to fix overlapping
+    const mStart = new Date(data.startTime)
+    const mEnd = new Date(data.endTime)
+    mStart.setSeconds(mStart.getSeconds() + 1);
+    mEnd.setSeconds(mEnd.getSeconds() - 1);
+
+    // get all reservations in time period
+    const reservationsCount = await getReservationsCountForPeriodDB(
+      mStart,
+      mEnd
+    );
+
+    if (reservationsCount + parseInt(data.count) > maxReservations) {
+      throw new NotEnoughReservationsAvailableError(
+        "Not enough reservations available."
+      );
     }
     // insert
     return await createReservationDB(
@@ -33,6 +49,9 @@ export default class ReservationService {
   }
 
   static async getReservationsTimePeriod(startTime, endTime) {
+    // add one second to fix overlapping
+    startTime.setSeconds(startTime.getSeconds() + 1);
+    endTime.setSeconds(endTime.getSeconds() - 1);
     const reservations = await getReservationsForPeriodDB(startTime, endTime);
     return reservations;
   }

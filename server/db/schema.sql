@@ -10,12 +10,12 @@ CREATE TABLE user(
 
 CREATE TABLE reservation(
 	rId INT NOT NULL AUTO_INCREMENT,
-	user INT NOT NULL,
+	userId INT NOT NULL,
 	startTime DATETIME NOT NULL,
 	endTime DATETIME NOT NULL,
 	count INT NOT NULL,
 	PRIMARY KEY(rId),
-	FOREIGN KEY(user) REFERENCES user(userId)
+	FOREIGN KEY(userId) REFERENCES user(userId)
 );
 
 CREATE TABLE refreshToken(

@@ -7,20 +7,12 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    const requestInterceptor = axios.interceptors.request.use(function (
-      config
-    ) {
-      const token = localStorage.getItem("token");
-      config.headers.Authorization = `Bearer ${token}`;
-
-      return config;
-    });
-
     if (token) {
+      console.log("Auth") 
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       localStorage.setItem("token", token);
     } else {
-      // Remove request interceptor
-      axios.interceptors.request.eject(requestInterceptor);
+      delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem("token");
     }
   }, [token]);

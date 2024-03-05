@@ -28,7 +28,7 @@
 }
 
 .mycalendar .free-cell {
-  background-color: #3eb48938;
+  background-color: #3eb4894c;
 }
 
 .mycalendar .free-cell:hover {
@@ -36,11 +36,19 @@
 }
 
 .mycalendar .middle-cell {
-  background-color: #ffc40238;
+  background-color: #ffc40278;
+}
+
+.mycalendar .middle2-cell {
+  background-color: #ff85027f;
+}
+
+.mycalendar .middle2-cell:hover {
+  background-color: #ffab026e;
 }
 
 .mycalendar .middle-cell:hover {
-  background-color: #ffc4026e;
+  background-color: #ffc4023f;
 }
 
 .mycalendar .full-cell {
