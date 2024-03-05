@@ -59,7 +59,7 @@ export default function RegsiterPage() {
           setErrors([]);
         }
         if (error.response.status === 409) {
-          setErrors([{ path: "data.email", msg: "User already exists." }]);
+          setErrors([{ path: "data.email", msg: "Benutzer existiert bereits." }]);
         }
         console.error("Error:", error);
         console.log(errors);
@@ -82,7 +82,7 @@ export default function RegsiterPage() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Register
+          Registrieren
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -97,7 +97,7 @@ export default function RegsiterPage() {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Vorname"
                 autoFocus
               />
             </Grid>
@@ -108,7 +108,7 @@ export default function RegsiterPage() {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Nachname"
                 name="lastName"
                 autoComplete="family-name"
               />
@@ -120,7 +120,7 @@ export default function RegsiterPage() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email Adresse"
                 name="email"
                 autoComplete="email"
               />
@@ -132,7 +132,7 @@ export default function RegsiterPage() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Passwort"
                 type="password"
                 id="password"
                 autoComplete="new-password"
@@ -146,12 +146,12 @@ export default function RegsiterPage() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Register
+            Registrieren
           </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to="/login" style={{ fontSize: 14 }}>
-                Already have an account? Sign in
+                Schon einen Account? Login
               </Link>
             </Grid>
           </Grid>

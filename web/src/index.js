@@ -6,12 +6,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LoginProvider } from "./context/LoginContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <App />
+      <LoginProvider>
+        <App />
+      </LoginProvider>
     </LocalizationProvider>
   </React.StrictMode>
 );

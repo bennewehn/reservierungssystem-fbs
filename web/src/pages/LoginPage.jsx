@@ -11,11 +11,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
 import axios from "axios";
+import { useLogin } from "../context/LoginContext";
 
 export default function LoginPage() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const { rememberLogin, setRememberLogin } = useLogin();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +56,10 @@ export default function LoginPage() {
       });
   };
 
+  const handleRememberLoginChange = (event) => {
+    setRememberLogin(event.target.checked);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -79,7 +85,7 @@ export default function LoginPage() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email Adresse"
             name="email"
             autoComplete="email"
             autoFocus
@@ -91,14 +97,14 @@ export default function LoginPage() {
             error={!!errors.find((e) => e.path === "data.password")}
             helperText={errors.find((e) => e.path === "data.password")?.msg}
             name="password"
-            label="Password"
+            label="Passwort"
             type="password"
             id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={<Checkbox checked={rememberLogin} onChange={handleRememberLoginChange} value="remember" color="primary" />}
+            label="Erinnere mich"
           />
           <LoadingButton
             loading={loginLoading}
@@ -117,7 +123,7 @@ export default function LoginPage() {
             }}
           >
             <Link to="/register" style={{ fontSize: 14 }}>
-              {"Don't have an account? Sign Up"}
+              {"Noch kein Account? Registrieren"}
             </Link>
           </Box>
         </Box>

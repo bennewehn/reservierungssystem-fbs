@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Calendar from "../components/Calendar";
 import axios from "axios";
 import dayjs from "dayjs";
+import hours from "../components/hours";
 import {
   Box,
   Button,
@@ -11,52 +12,19 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
   TextField,
   Typography,
-  tableCellClasses,
 } from "@mui/material";
-import styled from "@emotion/styled";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
 const createEmptyArray = (rows, cols, value) => {
   return Array(rows)
     .fill()
     .map(() => Array(cols).fill(value));
 };
-
-const hours = [
-  "08:00-09:30",
-  "09:45-11:15",
-  "11:30-13:00",
-  "13:30-15:00",
-  "15:15-16:45",
-  "16:45-18:15",
-  "18:15-20:00",
-  "20:00-21:30",
-];
 
 export default function ReservePage() {
   const [maxReservations, setMaxReservations] = useState(null);
@@ -163,7 +131,7 @@ export default function ReservePage() {
       ).data;
 
       const myRows = res.map((r) => {
-        return { name: `${r.lastName}, ${r.firstName}`, count: r.count };
+        return { name: `${r.lastName}, ${r.firstName}`, count: r.count, createdOn: dayjs(r.createdOn).format('DD.MM.YYYY HH:mm') };
       });
 
       setRows(myRows.length > 0 ? myRows : [{ name: "---", count: 0 }]);
@@ -237,7 +205,7 @@ export default function ReservePage() {
           <Typography variant="h6" fontWeight="bold" marginBottom={1}>
             Reservierungen
           </Typography>
-          <TableContainer component={Paper} sx={{maxHeight: 300}}>
+          <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
             <Table sx={{ minWidth: 300 }} aria-label="reservation table">
               <TableHead>
                 <TableRow>
@@ -246,6 +214,9 @@ export default function ReservePage() {
                   </StyledTableCell>
                   <StyledTableCell style={{ fontWeight: "bold" }} align="right">
                     Anzahl
+                  </StyledTableCell>
+                  <StyledTableCell style={{ fontWeight: "bold" }} align="right">
+                    Reservierungsdatum
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -258,7 +229,8 @@ export default function ReservePage() {
                     <StyledTableCell component="th" scope="row">
                       {row.name}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{row.count}</StyledTableCell>
+                    <StyledTableCell align="center">{row.count}</StyledTableCell>
+                    <StyledTableCell align="center">{row.createdOn}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>

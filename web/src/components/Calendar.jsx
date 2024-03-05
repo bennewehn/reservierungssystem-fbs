@@ -3,22 +3,12 @@ import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import DateField from "./DateField";
 import dayjs from "dayjs";
+import hours from "./hours";
 
 export default function Calendar({ cellMatrix, maxReservations, onDateChange, onCellClick }) {
   const [currentDay, setCurrentDay] = useState(dayjs(Date()));
 
   const days = ["Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."];
-
-  const hours = [
-    "08:00-09:30",
-    "09:45-11:15",
-    "11:30-13:00",
-    "13:30-15:00",
-    "15:15-16:45",
-    "16:45-18:15",
-    "18:15-20:00",
-    "20:00-21:30",
-  ];
 
   const setCurrentWeek = (day) => {
     setCurrentDay(day.startOf("week").add(1, "day"));
