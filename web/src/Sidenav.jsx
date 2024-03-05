@@ -17,8 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ListIcon from "@mui/icons-material/List";
+import EventIcon from "@mui/icons-material/Event";
 import ReservePage from "./pages/ReservePage";
 import logo from "./assets/images/logoFbs.png";
 import MyReservationsPage from "./pages/MyReservationsPage";
@@ -92,7 +91,7 @@ const Drawer = styled(MuiDrawer, {
 
 const pages = [
   { name: "Reservieren", icon: <EditCalendarIcon />, content: <ReservePage /> },
-  { name: "Meine Reservierungen", icon: <ListIcon/>, content: <MyReservationsPage/> },
+  { name: "Meine Reservierungen", icon: <EventIcon/>, content: <MyReservationsPage/> },
 ];
 
 export default function Sidenav({ handleLogout }) {

@@ -237,7 +237,7 @@ export default function ReservePage() {
           <Typography variant="h6" fontWeight="bold" marginBottom={1}>
             Reservierungen
           </Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{maxHeight: 300}}>
             <Table sx={{ minWidth: 300 }} aria-label="reservation table">
               <TableHead>
                 <TableRow>
