@@ -1,6 +1,16 @@
 # Reservierungssystem
 Ein Reservierungssystem zum Reservieren von einer begrenzten Anzahl von Plätzen für einen bestimmten Zeitraum.
 
+## Funktionen
+- Loginsystem, Benutzer anlegen
+- Tag und Zeit auswählen und bestimmte Anzahl von Plätzen reservieren
+- UI mit Kalenderdarstellung
+
+## Technologie 
+- Webapp in React
+- Datenbanksystem mit Express.js REST-API
+- MySQL Datenbank
+
 ## Installation
 ### Docker
 Laden der Images von docker-hub:
@@ -45,13 +55,7 @@ Beispiel Secrets generieren in js:
 ```js
 crypto.randomBytes(64).toString("hex");
 ```
-
-## Funktionen
-- Loginsystem, Benutzer anlegen
-- Tag und Zeit auswählen und bestimmte Anzahl von Plätzen reservieren
-- UI mit Kalenderdarstellung
-
-## Technologie 
-- Webapp in React
-- Datenbanksystem mit Express.js REST-API
-- MySQL Datenbank
+docker-compose starten:
+```
+docker-compose up
+```
