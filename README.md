@@ -1,49 +1,57 @@
 # Reservierungssystem
-Ein Reservierungssystem, dass eine Anzahl von gleichzeitig verfügbaren Plätze verwaltet.
+Ein Reservierungssystem zum Reservieren von einer begrenzten Anzahl von Plätzen für einen bestimmten Zeitraum.
 
+## Installation
+### Docker
+Laden der Images von docker-hub:
+```
+docker pull benewehn/reservierungssystem-fbs:v1.0-api
+docker pull benewehn/reservierungssystem-fbs:v1.0-web
+docker pull benewehn/reservierungssystem-fbs:v1.0-db
+```
+Beispiel docker-compose:
+```
+version: '3.8'
+
+services:
+  mysql:
+    image: benewehn/reservierungssystem-fbs:v1.0-db
+    environment:
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+  web:
+    image: benewehn/reservierungssystem-fbs:v1.0-web
+    ports:
+      - "8000:80"
+
+  api:
+    image: benewehn/reservierungssystem-fbs:v1.0-api
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: root
+      TOKEN_SECRET: a521483f0d5a0497d6a32a8178e93fca52ece353ed8c8337bc8894584ebbe57224d7dfbb37a5241ca45f1bfe150fc22d323ca80e76ff213e7b44ac791e9b8467
+      REFRESH_TOKEN_SECRET: 404ce7a06fbdad181b859c8e394d81f075a9873a2e13b9568c635ba788b25a8ad58e2d06c0ae63aa550c074012997835197c255b0a85b498440d3011514c837d
+      REFRESH_TOKEN_EXPIRATION: 86400
+      ACCESS_TOKEN_EXPIRATION: 3000
+```
+Beispiel Secrets generieren in js:
+```js
+crypto.randomBytes(64).toString("hex");
+```
 
 ## Funktionen
 - Loginsystem, Benutzer anlegen
-- Admin: Anzahl der gleichzeitig verfügbaren Plätze festlegen
 - Tag und Zeit auswählen und bestimmte Anzahl von Plätzen reservieren
 - UI mit Kalenderdarstellung
 
 ## Technologie 
 - Webapp in React
-- Datenbanksystem mit Java REST-API
+- Datenbanksystem mit Express.js REST-API
 - MySQL Datenbank
-
-## API
-- Reservierungen für Zeitraum
-- Reservierungen für einen Tag
-- Reservierung erstellen
-- Reservierung löschen
-- Reservierung bearbeiten
-
-### API Endpunkte
-#### Reservation
-Get Reservations for Time Period:
-GET /reservations/time-period?start=START_DATE&end=END_DATE
-Get Reservations for a Day:
-GET /reservations/day?date=DATE
-Create Reservation:
-POST /reservations
-Delete Reservation:
-DELETE /reservations/:id
-Update Reservation:
-PUT /reservations/:id
-
-#### User 
-POST /login
-GET /users/:mail: Create a new user.
-POST /users: Create a new user.
-PUT /users/:mail: Update an existing user.
-DELETE /users/:mail: Delete a user by ID.
-
-Routes: No logic, chain together controller functions and routes
-Controller: No business logic, just handle the request
-Services: Majority of business logic, algorithmic code
-
-https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
-
-# validation
