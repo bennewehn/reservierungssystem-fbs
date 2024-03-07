@@ -9,7 +9,7 @@ import authMiddleware from "./middleware/auth.js";
 dotenv.config();
 const app = express();
 
-const PORT = process.env.APP_PORT || 3000;
+const PORT = 3001;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.enable('trust proxy');
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "http://localhost:8000",
   credentials: true,
   allowedHeaders: "Content-Type, Authorization",
   exposedHeaders: "Authorization"

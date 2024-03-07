@@ -1,0 +1,4 @@
+.gitignore
+exmaple.env
+node_modules
+.env

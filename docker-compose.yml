@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql:
+    build: ./server/db
+    container_name: mysql
+    environment:
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    image: benewehn/reservierungssystem-fbs:v1.0-db
+
+  web:
+    build: ./web
+    container_name: web
+    ports:
+      - "8000:80"
+    image: benewehn/reservierungssystem-fbs:v1.0-web
+
+  api:
+    build: ./server/src
+    container_name: api
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: root
+      TOKEN_SECRET: a521483f0d5a0497d6a32a8178e93fca52ece353ed8c8337bc8894584ebbe57224d7dfbb37a5241ca45f1bfe150fc22d323ca80e76ff213e7b44ac791e9b8467
+      REFRESH_TOKEN_SECRET: 404ce7a06fbdad181b859c8e394d81f075a9873a2e13b9568c635ba788b25a8ad58e2d06c0ae63aa550c074012997835197c255b0a85b498440d3011514c837d
+      REFRESH_TOKEN_EXPIRATION: 86400
+      ACCESS_TOKEN_EXPIRATION: 3000
+    image: benewehn/reservierungssystem-fbs:v1.0-api
