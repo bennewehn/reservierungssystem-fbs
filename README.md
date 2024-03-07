@@ -11,6 +11,12 @@ Ein Reservierungssystem zum Reservieren von einer begrenzten Anzahl von Plätzen
 - Datenbanksystem mit Express.js REST-API
 - MySQL Datenbank
 
+## Dokumentation
+### API
+OpenAPI Dokumentation: [hier](https://app.swaggerhub.com/apis-docs/BenediktWehner/reservierungssystem/0.0.01)
+
+Postman Collection: [hier](https://www.postman.com/reservationsystemfbs/workspace/reservierungssystem/collection/30807855-afe18e57-d42c-44cd-8d73-c06333a054b4?action=share&creator=30807855)
+
 ## Installation
 ### Docker
 Laden der Images von docker-hub:
