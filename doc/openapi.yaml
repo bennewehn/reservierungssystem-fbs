@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: Reservierungssystem
+  description: |-
+    Ein Reservierungssystem zum Reservieren von einer begrenzten Anzahl von Plätzen für einen bestimmten Zeitraum.
+    
+    
+    Links:
+    - [Reservierungssystem Repository](https://github.com/bennewehn/reservierungssystem-fbs)
+    - [Postman Collection](https://www.postman.com/reservationsystemfbs/workspace/reservierungssystem/collection/30807855-afe18e57-d42c-44cd-8d73-c06333a054b4?action=share&creator=30807855)
+  version: 0.0.01
+servers:
+  - url: http://localhost:3001
+tags:
+  - name: users
+    description: Benutzerverwaltung
+  - name: reservations
+    description: Verwaltung der Reservierungen
+
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Benutzer hinzufügen
+      description: Benutzer hinzufügen
+      operationId: createUser
+      requestBody:
+        description: Einen neunen Benutzer dem System hinzufügen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: Benutzer erfolgreich erstellt
+       
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Einloggen
+      operationId: loginUser
+      description: Benutzer einloggen
+      requestBody:
+        description: Benutzer einloggen
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      example: max.mustermann@test.de
+                    password:
+                      type: string
+                      example: "123456"
+        required: true
+      responses:
+        '200':
+          description: Erfolgreich
+          headers:
+            Authorization:
+              description: Access Token
+              schema:
+                type: string
+            Set-Cookie:
+              description: Refresh Token
+              schema:
+                type: string
+
+        '401':
+          description: Fehler Authentifizierung
+
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: Einen Benutzer abmelden
+      operationId: logoutUser
+      description: Loggt Benutzer aus. Löscht Refresh-Token cookie.
+      responses:
+        '200':
+          description: Erfolgreich
+        '401':
+          description: Fehler Authentifizierun
+          
+  
+  /users/refresh:
+    post:
+      tags:
+        - users
+      summary: Access Token erneuern
+      operationId: refreshUser
+      description: Fordert ein neues Access-Token an.
+      responses:
+        '200':
+          description: Erfolgreich
+        '401':
+          description: Fehler Authorisierung. Kein Refresh-Token gegeben.
+  
+  /reservations/day:
+    get:
+      tags:
+        - reservations
+      summary: Alle Reservierungen für einen Tag
+      operationId: getReservations
+      description: Alle Reservierungen für einen Tag.
+      parameters:
+        - name: day
+          in: query
+          description: Tag
+          required: true
+          schema:
+            type: string
+            format: date
+          example:
+            2004-06-17
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Fehler Authorisierung.
+
+  /reservations/time-period:
+    get:
+      tags:
+        - reservations
+      summary: Alle Reservierungen für einen Zeitraum
+      operationId: getReservationsPeriod
+      description: Alle Reservierungen für einen Zeitraum.
+      parameters:
+        - name: startTime
+          in: query
+          description: Anfangs Zeit
+          required: true
+          schema:
+            type: string
+            format: date
+          example:
+            2024-03-09T15:15:00.000Z
+        - name: endTime
+          in: query
+          description: End Zeit muss größer sein als Start Zeit
+          required: true
+          schema:
+            type: string
+            format: date
+          example:
+            2024-03-09T16:45:00.000Z
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Fehler Authorisierung.
+
+  /reservations/max:
+    get:
+      tags:
+        - reservations
+      summary: Maximale Anzahl an Reservierungen pro Zeitraum
+      operationId: getMaxReservations
+      description: Alle Reservierungen für einen Zeitraum.
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  maxReservations:
+                    type: integer
+                    description: Maximale Reservierungen
+        '401':
+          description: Fehler Authorisierung.
+          
+  /reservations/:
+    get:
+      tags:
+        - reservations
+      summary: Alle Reservierungen des eingeloggten Benutzers
+      operationId: getUserReservations
+      description: Alle Reservierungen des eingeloggten Benutzers
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Fehler Authorisierung.
+     
+  /reservations:
+    post:
+      tags:
+        - reservations
+      summary: Reservierung erstellen
+      operationId: createReservation
+      description: Reservierung erstellen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+        required: true
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+        '401':
+          description: Fehler Authorisierung.
+    
+  /reservations/:id:
+    delete:
+      tags:
+        - reservations
+      summary: Reservierung löschen
+      operationId: deleteReservation
+      description: Reservierung löschen
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Erfolgreich
+        '401':
+          description: Fehler Authorisierung.  
+          
+components:
+  schemas:
+        
+    User:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - firstName
+            - lastName
+            - email
+            - password
+          properties:
+            firstName:
+              type: string
+              example: "Max"
+            lastName:
+              type: string
+              example: "Mustermann"
+            email:
+              type: string
+              format: email
+              example: "max.mustermann@test.de"
+            password:
+              type: string
+              example: "123456"
+              
+    Reservation:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - startTime
+            - endTime
+            - count
+          properties:
+            startTime:
+              type: string
+              format: date-time
+              example: "2024-03-06T14:15:00"
+            endTime:
+              type: string
+              format: date-time
+              example: "2024-03-06 15:45:00"
+            count:
+              type: number
+              example: 10
+              
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+              
