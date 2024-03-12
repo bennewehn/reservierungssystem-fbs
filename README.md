@@ -41,6 +41,8 @@ services:
 
   web:
     image: benewehn/reservierungssystem-fbs:v1.0-web
+    environment:
+      API_URL: http://192.168.178.89:3001
     ports:
       - "8000:80"
 
@@ -49,6 +51,7 @@ services:
     ports:
       - "3001:3001"
     environment:
+      WEB_URL: http://192.168.178.89:8000
       DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: root
