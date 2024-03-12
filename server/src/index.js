@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.enable('trust proxy');
 
 app.use(cors({
-  origin: "http://localhost:8000",
+  origin: process.env.WEB_URL,
   credentials: true,
   allowedHeaders: "Content-Type, Authorization",
   exposedHeaders: "Authorization"
