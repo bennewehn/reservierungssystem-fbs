@@ -16,7 +16,8 @@ function App() {
 
   const { rememberLogin } = useLogin();
 
-  axios.defaults.baseURL = "http://localhost:3001";
+  axios.defaults.baseURL = window._env_.API_URL;
+  //axios.defaults.baseURL = "http://192.168.178.89:3001";
   axios.defaults.headers.post["Content-Type"] = "application/json";
   axios.defaults.withCredentials = true; // for cors cookies
 
@@ -39,9 +40,9 @@ function App() {
       // If the error status is 401 and there is no originalRequest._retry flag,
       // it means the token has expired and we need to refresh it
       if (
-        error.response.status === 401 &&
+        error.response?.status === 401 &&
         !originalRequest._retry &&
-        error.response.data.message ===
+        error.response?.data?.message ===
           "Unauthorized! Access Token was expired!"
       ) {
         originalRequest._retry = true;
