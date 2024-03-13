@@ -12,7 +12,6 @@ export default function DateField({ onChange }) {
   const [selectedDate, setSelectedDate] = useState(dayjs(new Date()));
   const initialRender = useRef(true);
 
-
   useEffect(() => {
     if (!initialRender.current) {
       onChange(selectedDate);
@@ -45,9 +44,11 @@ export default function DateField({ onChange }) {
       <DatePicker
         value={selectedDate}
         onChange={handleDateChange}
-        slotProps={{ textField: { variant: "outlined" } }}
+        slotProps={{
+          textField: { variant: "outlined" },
+          openPickerIcon: OpenPickerIcon,
+        }}
         className="custom-datepicker"
-        slots={{ openPickerIcon: OpenPickerIcon }}
       />
       <IconButton className="px-3" onClick={handleNextWeek}>
         <ArrowForwardIcon className="icon" />
