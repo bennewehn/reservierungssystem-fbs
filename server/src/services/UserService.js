@@ -15,7 +15,7 @@ export default class UserService {
   static async createUser(data) {
     const user = await getUserByEmailDB(data.email);
     if (user) {
-      throw new UserAlreadyExistsError("Email already used.");
+      throw new UserAlreadyExistsError("Email existiert bereits.");
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
     await createUserDB(data.firstName, data.lastName, data.email, hashedPassword);
@@ -26,7 +26,7 @@ export default class UserService {
     const user = await getUserByEmailDB(data.email);
 
     if (!user) {
-      throw new UserNotFoundError("User not found.");
+      throw new UserNotFoundError("Benutzer nicht gefunden.");
     }
 
     // check if refresh token exists for user

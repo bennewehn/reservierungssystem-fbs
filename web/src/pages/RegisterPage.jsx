@@ -168,8 +168,8 @@ export default function RegsiterPage() {
         }}
       >
         <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          <p>User successfully created. You can log in now.</p>
+          <AlertTitle>Erfolg</AlertTitle>
+          <p>Benutzer erfolgreich erstellt.</p>
           <div>
             <Button variant="outlined" onClick={handleLogin}>Login</Button>
           </div>
