@@ -17,6 +17,8 @@ OpenAPI Dokumentation: [hier](https://app.swaggerhub.com/apis-docs/BenediktWehne
 
 Postman Collection: [hier](https://www.postman.com/reservationsystemfbs/workspace/reservierungssystem/collection/30807855-afe18e57-d42c-44cd-8d73-c06333a054b4?action=share&creator=30807855)
 
+Benutzeranleitung: [hier](https://github.com/bennewehn/reservierungssystem-fbs/blob/main/doc/Benutzeranleitung.pdf)
+
 ## Installation
 ### Docker
 Laden der Images von docker-hub:
